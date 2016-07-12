@@ -15,11 +15,11 @@ The `dump_kern_symbols` module will create `/proc/kern_syms_info` file:
 
 ```
 cat /proc/kern_syms_info 
-                     		Start                  End			Size
+                     		Start                  End                      Size
 
-_text physical addr: 		[0x1000000]            [16777216]		[7906806 bytes]
+_text physical addr: 		[0x1000000]            [16777216]               [7906806 bytes]
 _text virtual  addr: 		[0xffffffff81000000]   [18446744071578845184]
 
-__bss physical addr: 		[0x201e000]            [33677312]		[11468800 bytes]
+__bss physical addr: 		[0x201e000]            [33677312]               [11468800 bytes]
 __bss virtual  addr: 		[0xffffffff8201e000]   [18446744071595745280]
 ```
