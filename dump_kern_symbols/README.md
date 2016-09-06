@@ -8,7 +8,7 @@ to sections boundaries.
 ```
 $ cd dump_kern_symbols
 $ make
-$ sudo make insmod dump_kern_symbols.ko
+$ sudo insmod dump_kern_symbols.ko
 ```
 
 The `dump_kern_symbols` module will create `/proc/kern_syms_info` file:
