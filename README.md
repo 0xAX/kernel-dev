@@ -5,7 +5,8 @@ and for learning of Linux kernel.
 
 ## Modules
 
-  * dump_kern_symbols - dumps some kernel sections related symbols into `/proc/kern_syms_info`
+  * dump_kern_sections - dumps some kernel sections related symbols into `/proc/kern_syms_info`
+and information about them.
 
 ## Author
 

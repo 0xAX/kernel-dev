@@ -1,7 +1,7 @@
 PWD = $(shell pwd)
 
-MOD=dump_kern_symbols.ko
-obj-m += dump_kern_symbols.o
+MOD=kernel-sections.ko
+obj-m += kernel-sections.o
 
 all:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules

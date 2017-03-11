@@ -1,20 +1,20 @@
-# dump_kern_symbols
+# kernel-sections
 
-The `dump_kern_symbols` module provides simple module which dumps some kernel symbols which are related
-to sections boundaries.
+The `kernel-sections` module provides simple module which dumps some kernel symbols (sections) which are
+related to sections boundaries.
 
 ## Usage
 
 ```
 $ cd dump_kern_symbols
 $ make
-$ sudo insmod dump_kern_symbols.ko
+$ sudo insmod kernel-sections.ko
 ```
 
-The `dump_kern_symbols` module will create `/proc/kern_syms_info` file:
+The `kernel-sections` module will create `/proc/kernel-sections` file:
 
 ```
-cat /proc/kern_syms_info 
+cat /proc/kernel-sections
                      		Start                  End                      Size
 
 _text physical addr: 		[0x1000000]            [16777216]               [7906806 bytes]

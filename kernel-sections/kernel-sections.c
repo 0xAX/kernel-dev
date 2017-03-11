@@ -47,26 +47,26 @@ static const struct file_operations kern_syms_fops = {
 	.release	= single_release,
 };
 
-static int __init dump_pts_init(void)
+static int __init kernel_sections_mod_init(void)
 {
-	kernel_symbols_info = proc_create("kern_syms_info", 0, NULL, &kern_syms_fops);
+	kernel_symbols_info = proc_create("kernel-sections", 0, NULL, &kern_syms_fops);
 
 	if (!kernel_symbols_info)
 	{
-		pr_info("Error creating /proc/kernel_pages directory");
+		pr_info("Error creating /proc/kernel-sections directory");
 		return -ENOMEM;
 	}
 
         return 0;
 }
 
-static void __exit dump_pts_cleanup(void)
+static void __exit kernel_sections_mod_cleanup(void)
 {
-	remove_proc_entry("kern_syms_info", NULL);
+	remove_proc_entry("kernel-sections", NULL);
 }
 
-module_init(dump_pts_init);
-module_exit(dump_pts_cleanup);
+module_init(kernel_sections_mod_init);
+module_exit(kernel_sections_mod_cleanup);
 
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Alexander Kuleshov <kuleshovmail@gmail.com>");
