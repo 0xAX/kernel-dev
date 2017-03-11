@@ -43,7 +43,7 @@ static int kern_syms_open(struct inode *inode, struct file *file)
 static const struct file_operations kern_syms_fops = {
 	.open		= kern_syms_open,
 	.read		= seq_read,
-	.llseek		= seq_lseek,
+	.llseek         = seq_lseek,
 	.release	= single_release,
 };
 
