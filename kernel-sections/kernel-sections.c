@@ -15,12 +15,9 @@ static int kern_syms_proc_show(struct seq_file *m, void *v)
 {
 	phys_addr_t __text = (phys_addr_t)__pa_symbol(kallsyms_lookup_name("_text"));
 	virt_addr_t __text_v = (virt_addr_t)kallsyms_lookup_name("_text");
-
 	phys_addr_t __etext = (phys_addr_t)__pa_symbol(kallsyms_lookup_name("_etext"));
-	
 	phys_addr_t __bss_start = (phys_addr_t)__pa_symbol(kallsyms_lookup_name("__bss_start"));
 	virt_addr_t __bss_start_v = (virt_addr_t)kallsyms_lookup_name("__bss_start");
-
 	phys_addr_t __bss_stop = (phys_addr_t)__pa_symbol(kallsyms_lookup_name("__bss_stop"));
 
 	seq_printf(m, "                     \t\tStart                  End\t\t\tSize\n\n");
