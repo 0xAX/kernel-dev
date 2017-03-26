@@ -5,7 +5,7 @@ and for learning of Linux kernel.
 
 ## Modules
 
-  * kernel_sections - dumps some kernel sections related symbols into `/proc/kernel-sections`
+  * `kernel-sections` - dumps some kernel sections related symbols into `/proc/kernel-sections`
 and information about them.
 
 ## Author
