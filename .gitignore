@@ -4,3 +4,4 @@
 *.order
 *.ko
 *.mod.c
+!*.patch

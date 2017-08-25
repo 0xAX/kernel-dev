@@ -1,0 +1,134 @@
+From 66484934de44e546de4457118d81f90406a09b59 Mon Sep 17 00:00:00 2001
+From: Alexander Kuleshov <kuleshovmail@gmail.com>
+Date: Fri, 26 Aug 2017 00:04:00 +0600
+Subject: [PATCH] x86/e820: introduce dump_memory_map()
+
+This patch introduces dump_memory_map() function that will be called
+during very early setup of Linux kernel.
+
+After information about memory regions will be collected via e820
+service, this function will be called and dump information about
+collected RAM regions.
+
+Example:
+
+Early memory map:
+[USABLE]     base: 0x0 size: 0x654336
+[RESERVED]   base: 0x654336 size: 0x1024
+[RESERVED]   base: 0x983040 size: 0x65536
+[USABLE]     base: 0x1048576 size: 0x3220045824
+[RESERVED]   base: 0x3221094400 size: 0x131072
+[RESERVED]   base: 0x4294705152 size: 0x262144
+
+NOTE: Now early printf() from the arch/x86/boot/printf.c does
+not support 64-bit values. So, values could be overloaded.
+
+Signed-off-by: Alexander Kuleshov <kuleshovmail@gmail.com>
+---
+ arch/x86/boot/boot.h   |  1 +
+ arch/x86/boot/main.c   |  1 +
+ arch/x86/boot/memory.c | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ arch/x86/boot/printf.c |  2 +-
+ 4 files changed, 49 insertions(+), 1 deletion(-)
+
+diff --git a/arch/x86/boot/boot.h b/arch/x86/boot/boot.h
+index ef5a9cc66fb8..468dced7f980 100644
+--- a/arch/x86/boot/boot.h
++++ b/arch/x86/boot/boot.h
+@@ -310,6 +310,7 @@ void __attribute__((noreturn)) die(void);
+ 
+ /* memory.c */
+ int detect_memory(void);
++void dump_memory_map(void);
+ 
+ /* pm.c */
+ void __attribute__((noreturn)) go_to_protected_mode(void);
+diff --git a/arch/x86/boot/main.c b/arch/x86/boot/main.c
+index 9bcea386db65..c75913d3c9e7 100644
+--- a/arch/x86/boot/main.c
++++ b/arch/x86/boot/main.c
+@@ -157,6 +157,7 @@ void main(void)
+ 
+ 	/* Detect memory layout */
+ 	detect_memory();
++	dump_memory_map();
+ 
+ 	/* Set keyboard repeat rate (why?) and query the lock flags */
+ 	keyboard_init();
+diff --git a/arch/x86/boot/memory.c b/arch/x86/boot/memory.c
+index d9c28c87e477..b56207118298 100644
+--- a/arch/x86/boot/memory.c
++++ b/arch/x86/boot/memory.c
+@@ -15,6 +15,12 @@
+ 
+ #include "boot.h"
+ 
++#define E820_USABLE	1
++#define E820_RESERVED	2
++#define E820_ACPI	3
++#define E820_ACPI_NVS	4
++#define E820_BAD	5
++
+ #define SMAP	0x534d4150	/* ASCII "SMAP" */
+ 
+ static int detect_memory_e820(void)
+@@ -134,3 +140,43 @@ int detect_memory(void)
+ 
+ 	return err;
+ }
++
++void dump_memory_map(void)
++{
++	int count = 0;
++
++	printf("Early memory map:\n\n");
++
++	while (count < ARRAY_SIZE(boot_params.e820_table))
++	{
++		__u32 mem_type = boot_params.e820_table[count].type;
++		__u64 addr = boot_params.e820_table[count].addr;
++		__u64 size = boot_params.e820_table[count].size;
++
++		if (!mem_type)
++			break;
++
++		switch (mem_type)
++		{
++		case E820_USABLE:
++			printf("[USABLE]     base: 0x%lu size: 0x%lu\n", addr, size);
++			break;
++		case E820_RESERVED:
++			printf("[RESERVED]   base: 0x%lu size: 0x%lu\n", addr, size);
++			break;
++		case E820_ACPI:
++			printf("[ACPI]       base: 0x%lu size: 0x%lu\n", addr, size);
++			break;
++		case E820_ACPI_NVS:
++			printf("[NVS]        base: 0x%lu size: 0x%lu\n", addr, size);
++			break;
++		case E820_BAD:
++			printf("[BAD REGION] base: 0x%lu size: 0x%lu\n", addr, size);
++			break;
++		default:
++			printf("Other memory type %d\n", mem_type);
++			break;
++		}
++		count++;
++	}
++}
+diff --git a/arch/x86/boot/printf.c b/arch/x86/boot/printf.c
+index 565083c16e5c..f70e9b7a4757 100644
+--- a/arch/x86/boot/printf.c
++++ b/arch/x86/boot/printf.c
+@@ -267,7 +267,7 @@ int vsprintf(char *buf, const char *fmt, va_list args)
+ 			continue;
+ 		}
+ 		if (qualifier == 'l')
+-			num = va_arg(args, unsigned long);
++			num = va_arg(args, __u64);
+ 		else if (qualifier == 'h') {
+ 			num = (unsigned short)va_arg(args, int);
+ 			if (flags & SIGN)
+-- 
+2.13.5
+
