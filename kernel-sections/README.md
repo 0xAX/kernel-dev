@@ -8,7 +8,7 @@ related to sections boundaries.
 ```
 $ cd dump_kern_symbols
 $ make
-$ sudo insmod kernel-sections.ko
+$ make install
 ```
 
 The `kernel-sections` module will create `/proc/kernel-sections` file:
@@ -22,4 +22,10 @@ _text virtual  addr: 		[0xffffffff81000000]   [18446744071578845184]
 
 __bss physical addr: 		[0x201e000]            [33677312]               [11468800 bytes]
 __bss virtual  addr: 		[0xffffffff8201e000]   [18446744071595745280]
+```
+
+To remove the module execute:
+
+```
+$ make uninstall
 ```
