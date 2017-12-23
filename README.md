@@ -1,4 +1,4 @@
-# kernel-modules
+# kernel-dev
 
 This repo contains set of small and useful kernel modules for tracing/debugging of different stuff
 and for learning of Linux kernel.
