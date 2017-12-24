@@ -4,4 +4,7 @@
 #
 # Github: https://github.com/0xAX/kernel-dev/tree/master/kernel-testing
 
+use strict;
+use warnings;
+
 1;
