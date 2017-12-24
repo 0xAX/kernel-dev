@@ -5,6 +5,9 @@
 # Github: https://github.com/0xAX/kernel-dev/tree/master/kernel-testing
 
 use strict;
-use warnings;
+use warnings "all";
+use diagnostics -verbose;
+
+BEGIN { $diagnostics::PRETTY = 1 }
 
 1;
