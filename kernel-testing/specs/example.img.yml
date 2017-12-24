@@ -1,0 +1,4 @@
+disk:
+        name: "example.img"
+        size: 10G
+        format: raw
