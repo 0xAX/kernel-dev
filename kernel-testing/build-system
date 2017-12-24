@@ -6,12 +6,12 @@
 
 use strict;
 use warnings "all";
-use diagnostics -verbose;
+use diagnostics;
+
+use YAML;
 
 use Getopt::Long;
 
 require "./scripts/disk.pm";
-
-BEGIN { $diagnostics::PRETTY = 1 }
 
 exit 0;

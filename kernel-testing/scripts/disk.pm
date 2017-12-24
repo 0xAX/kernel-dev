@@ -6,8 +6,6 @@
 
 use strict;
 use warnings "all";
-use diagnostics -verbose;
-
-BEGIN { $diagnostics::PRETTY = 1 }
+use diagnostics;
 
 1;
