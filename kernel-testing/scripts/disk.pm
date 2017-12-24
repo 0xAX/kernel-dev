@@ -4,11 +4,4 @@
 #
 # Github: https://github.com/0xAX/kernel-dev/tree/master/kernel-testing
 
-use strict;
-use warnings;
-
-use Getopt::Long;
-
-require "./scripts/disk.pm";
-
-exit 0;
+1;
