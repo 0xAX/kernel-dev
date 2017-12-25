@@ -9,9 +9,14 @@ use warnings "all";
 use diagnostics;
 
 use YAML;
-
 use Getopt::Long;
 
 require "./scripts/disk.pm";
+
+my $spec = "";
+
+GetOptions(
+    "spec=s" => \$spec
+) or die("Wrong set of command line arguments were passed\n");
 
 exit 0;
