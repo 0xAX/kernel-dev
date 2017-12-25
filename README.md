@@ -12,7 +12,7 @@ and information about them.
 
   See [README.md](https://github.com/0xAX/kernel-modules/blob/master/patches/README.md)
 
-## kernel-testing
+## build-system
 
 This directory contains a try to build minimal image with some useful stuff to test
 the Linux kernel.
